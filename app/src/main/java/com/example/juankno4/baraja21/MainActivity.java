@@ -1,6 +1,8 @@
 package com.example.juankno4.baraja21;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String Url = "http://nuevo.rnrsiilge-org.mx/baraja/numero", Url2 = "http://nuevo.rnrsiilge-org.mx/baraja/enviar";
     ImageView imgct;
     TextView text1, text3;
-    Button btn1, btn2, btnreiniciar;
+    Button btn1, btn2, btnreiniciar,btnresultados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn1.setOnClickListener(this);
         btn2 = findViewById(R.id.btn2);
         btn2.setOnClickListener(this);
+        btnresultados = findViewById(R.id.btnresultados);
+        btnresultados.setOnClickListener(this);
         btnreiniciar = findViewById(R.id.btnreiniciar);
         btnreiniciar.setOnClickListener(this);
         imgct = findViewById(R.id.imgv);
@@ -173,6 +177,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 imgct.setImageResource(0);
                 btn1.setText("solicitar carta");
                 btn1.setBackgroundColor(Color.parseColor("#D81B60"));
+                break;
+            case R.id.btnresultados:
+                Intent it = new Intent(Intent.ACTION_VIEW,Uri.parse("http://nuevo.rnrsiilge-org.mx/baraja/resultados"));
+                startActivity(it);
                 break;
         }
 
