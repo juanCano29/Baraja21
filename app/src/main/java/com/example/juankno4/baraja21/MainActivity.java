@@ -17,17 +17,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Integer numero = 0, count = 0 ;
-   String Url = "http://nuevo.rnrsiilge-org.mx/baraja/numero", Url2 = "http://nuevo.rnrsiilge-org.mx/baraja/enviar";
-   ImageView imgct;
-   TextView text1, text3;
-   Button btn1,btn2,btnreiniciar;
+    Integer numero = 0, count = 0;
+    String Url = "http://nuevo.rnrsiilge-org.mx/baraja/numero", Url2 = "http://nuevo.rnrsiilge-org.mx/baraja/enviar";
+    ImageView imgct;
+    TextView text1, text3;
+    Button btn1, btn2, btnreiniciar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         btn1 = findViewById(R.id.btn1);
-         btn1.setOnClickListener(this);
+        btn1 = findViewById(R.id.btn1);
+        btn1.setOnClickListener(this);
         btn2 = findViewById(R.id.btn2);
         btn2.setOnClickListener(this);
         btnreiniciar = findViewById(R.id.btnreiniciar);
@@ -35,12 +36,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgct = findViewById(R.id.imgv);
         text1 = findViewById(R.id.text1);
         text3 = findViewById(R.id.text3);
+
+        btn2.setEnabled(false);
+        btnreiniciar.setEnabled(false);
+
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.btn1:
                 JsonObjectRequest jor = new JsonObjectRequest(
                         Request.Method.GET,
@@ -50,26 +54,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-
                                     numero = response.getInt("numero");
                                     count += numero;
-
-                                    if (count <= 21)
-                                    {
+                                    if (count <= 21) {
+                                        btn2.setEnabled(false);
+                                        btnreiniciar.setEnabled(false);
                                         text3.setText(response.toString());
                                     }
-                                    if (count >= 21){
+                                    if (count >= 21) {
                                         btn1.setEnabled(false);
                                         btn1.setText("Ya no pidas mas");
-
+                                        btn2.setEnabled(true);
                                     }
-                                    if(count > 21)
-                                        {
-                                            text3.setText(response.toString());
-                                            btn1.setEnabled(false);
-                                            Toast.makeText(MainActivity.this, "Te pasaste del 21", Toast.LENGTH_SHORT).show();
-                                        }
-                                    switch (numero){
+                                    if (count > 21) {
+                                        text3.setText(response.toString());
+                                        btn1.setEnabled(false);
+                                        Toast.makeText(MainActivity.this, "Te pasaste del 21", Toast.LENGTH_SHORT).show();
+                                    }
+                                    switch (numero) {
                                         case 1:
                                             imgct.setImageResource(R.drawable.as);
                                             break;
@@ -109,10 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         case 13:
                                             imgct.setImageResource(R.drawable.k);
                                             break;
-
                                     }
-
-
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -129,10 +128,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btn2:
                 btn2.setEnabled(false);
+                btnreiniciar.setEnabled(true);
                 JSONObject data = new JSONObject();
                 try {
-                    data.put("nombre","Juan Cano");
-                    data.put("numero",text1.getText().toString());
+                    data.put("nombre", "Juan Cano");
+                    data.put("numero", text1.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -157,6 +157,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         });
                 VolleyS.getE(getApplicationContext()).getRequestQueue().add(jor1);
+                break;
+
+            case R.id.btnreiniciar:
+                text1.setText("0");
+                text3.setText("0");
+                count = 0;
+                btn1.setEnabled(true);
+                btn2.setEnabled(true);
+                imgct.setImageResource(0);
+                btn1.setText("solicitar carta");
                 break;
         }
 
