@@ -1,5 +1,6 @@
 package com.example.juankno4.baraja21;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -36,10 +37,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgct = findViewById(R.id.imgv);
         text1 = findViewById(R.id.text1);
         text3 = findViewById(R.id.text3);
-
         btn2.setEnabled(false);
         btnreiniciar.setEnabled(false);
-
+        btnreiniciar.setBackgroundColor(Color.parseColor("#638cb5"));
+        btn2.setBackgroundColor(Color.parseColor("#638cb5"));
     }
 
     @Override
@@ -65,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         btn1.setEnabled(false);
                                         btn1.setText("Ya no pidas mas");
                                         btn2.setEnabled(true);
+                                        btn1.setBackgroundColor(Color.parseColor("#638cb5"));
+                                        btn2.setBackgroundColor(Color.parseColor("#1010ff"));
                                     }
                                     if (count > 21) {
                                         text3.setText(response.toString());
@@ -129,6 +132,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn2:
                 btn2.setEnabled(false);
                 btnreiniciar.setEnabled(true);
+                btn2.setBackgroundColor(Color.parseColor("#638cb5"));
+                btnreiniciar.setBackgroundColor(Color.parseColor("#008577"));
                 JSONObject data = new JSONObject();
                 try {
                     data.put("nombre", "Juan Cano");
@@ -160,13 +165,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.btnreiniciar:
+                btnreiniciar.setBackgroundColor(Color.parseColor("#638cb5"));
                 text1.setText("0");
                 text3.setText("0");
                 count = 0;
                 btn1.setEnabled(true);
-                btn2.setEnabled(true);
                 imgct.setImageResource(0);
                 btn1.setText("solicitar carta");
+                btn1.setBackgroundColor(Color.parseColor("#D81B60"));
                 break;
         }
 
